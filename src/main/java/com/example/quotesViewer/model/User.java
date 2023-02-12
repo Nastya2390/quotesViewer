@@ -1,5 +1,6 @@
 package com.example.quotesViewer.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,6 +42,7 @@ public class User {
     private LocalDateTime creationDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonManagedReference
     private List<Quote> quotes;
 
     @Override

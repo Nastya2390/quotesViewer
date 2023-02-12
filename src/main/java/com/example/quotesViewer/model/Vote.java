@@ -1,5 +1,6 @@
 package com.example.quotesViewer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Setter
 @RequiredArgsConstructor
 @Entity
-public class Vote {
+public class Vote implements Comparable<Vote> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +31,7 @@ public class Vote {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "quote_id", nullable = false)
+    @JsonBackReference
     private Quote quote;
 
     @Override
@@ -54,6 +56,11 @@ public class Vote {
                 ", putScoreDate=" + putScoreDate +
                 ", quoteId=" + quote.getId() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Vote o) {
+        return this.getPutScoreDate().compareTo(o.getPutScoreDate());
     }
 
 }
